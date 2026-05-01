@@ -1,9 +1,13 @@
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+   public event Action onPlayerJump;
+
 
     [Header ("References")]
     [SerializeField] Transform OrientationTransform;
@@ -128,6 +132,8 @@ public class PlayerController : MonoBehaviour
     }
     private void SetPlayerJump()
     {
+
+        onPlayerJump?.Invoke();
         PlayerRigidBody.linearVelocity = new Vector3(PlayerRigidBody.linearVelocity.x , 0f,PlayerRigidBody.linearVelocity.z);
         PlayerRigidBody.AddForce(transform.up* JumpForce,ForceMode.Impulse);
         
