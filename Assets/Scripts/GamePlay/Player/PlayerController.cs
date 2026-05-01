@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private KeyCode JumpKey;
     [SerializeField] private float JumpForce;
     [SerializeField] private float JumpCooldown;
+    [SerializeField] private float AirMultiplier;
+    [SerializeField] private float AirDrag;
     private bool canJump = true;
 
     
@@ -28,7 +31,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float SlideMultiplier;
     [SerializeField] private float SlideDrag;
 
-
+    private StateController PlayerStateController; 
 
     private Rigidbody PlayerRigidBody;
     private float HorizontalInput, VerticalInput;
@@ -37,6 +40,7 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        PlayerStateController = GetComponent<StateController>();
         PlayerRigidBody = GetComponent<Rigidbody>();
         PlayerRigidBody.freezeRotation = true;
     }
@@ -49,6 +53,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         SetInputs();
+        SetStates();
         SetPlayerDrag();
         LimitPlayerSpeed();
     }
@@ -56,6 +61,28 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
      SetPlayerMovement();
+    }
+
+    private void SetStates()
+    {
+        var movementDirection = GetMovementDirection();
+        var isGrounded = IsGrounded();
+        var currentStates = PlayerStateController.GetPlayerState();
+
+        var newState = currentStates switch
+        {
+          _ when movementDirection ==  Vector3.zero && isGrounded && !IsSliding => PlayerState.Idle,
+          _ when movementDirection != Vector3.zero && isGrounded && !IsSliding => PlayerState.Run,
+          _ when movementDirection != Vector3.zero && isGrounded && IsSliding => PlayerState.Slide,
+          _ when movementDirection == Vector3.zero && isGrounded && IsSliding => PlayerState.SlideIdle,
+          _ when !canJump && !isGrounded => PlayerState.Jump,
+          _ => currentStates   
+        };
+
+        if (newState != currentStates)
+        {
+            PlayerStateController.ChangeState(newState);
+        }
     }
     private void SetInputs()
     {
@@ -85,16 +112,18 @@ public class PlayerController : MonoBehaviour
         MovementDirection = OrientationTransform.forward * VerticalInput 
         + OrientationTransform.right * HorizontalInput;
 
-        if (IsSliding)
+        float ForceMultiplier = PlayerStateController.GetPlayerState() switch
         {
-            PlayerRigidBody.AddForce(MovementDirection.normalized * MovementSpeed*SlideMultiplier,ForceMode.Force);
+          PlayerState.Run => 1f,
+          PlayerState.Slide => SlideMultiplier,
+          PlayerState.Jump => AirMultiplier,
+          _ =>1
+          
 
-        }
-        else
-        {
-            PlayerRigidBody.AddForce(MovementDirection.normalized * MovementSpeed,ForceMode.Force);
+        };
+            PlayerRigidBody.AddForce(MovementDirection.normalized * MovementSpeed*ForceMultiplier,ForceMode.Force);
 
-        }
+    
 
     }
     private void SetPlayerJump()
@@ -116,15 +145,17 @@ public class PlayerController : MonoBehaviour
     }
     private void SetPlayerDrag()
     {
-        if(IsSliding)
-        {
-            PlayerRigidBody.linearDamping = SlideDrag;
-        }
-        else
-        {
-          PlayerRigidBody.linearDamping = GroundDrag;
 
-        }
+        PlayerRigidBody.linearDamping = PlayerStateController.GetPlayerState() switch
+        {
+          PlayerState.Slide => SlideDrag,
+          PlayerState.Run => GroundDrag,
+          PlayerState.Jump => AirDrag,
+           _ => PlayerRigidBody.linearDamping
+            
+        };
+
+      
     }
 
     private void LimitPlayerSpeed()
@@ -135,6 +166,11 @@ public class PlayerController : MonoBehaviour
             Vector3 LimitedVelocity = FlatVelocity.normalized * MovementSpeed;
             PlayerRigidBody.linearVelocity = new Vector3(LimitedVelocity.x,LimitedVelocity.y,LimitedVelocity.z);
         }
-
+ 
+    }
+    private Vector3 GetMovementDirection()
+    {
+        return MovementDirection.normalized;
     }
 }
+
