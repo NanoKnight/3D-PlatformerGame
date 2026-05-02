@@ -901,7 +901,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HolyWheats
   playerController: {fileID: 352007420}
   JumpBoost: 5
-  JumpTime: 0
+  JumpTime: 5
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,7 +1620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RottenWheats
   playerController: {fileID: 352007420}
-  DecreaseMovementSpeed: -25
+  DecreaseMovementSpeed: -15
   DecreaseTime: 5
 --- !u!1 &2019524174
 GameObject:
