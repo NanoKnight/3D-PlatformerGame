@@ -1,21 +1,14 @@
+using Mono.Cecil.Cil;
 using UnityEngine;
 
 public class PlayerInteractionController : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag(Consts.WheatTypes.GOLD_WHEAT))
+        if(other.gameObject.TryGetComponent<ICollectible>(out var collectible) )
         {
-            other.gameObject.GetComponent<GoldWheats>().Collect();
-        }
-        if(other.CompareTag(Consts.WheatTypes.HOLY_WHEAT))
-        {
-            other.gameObject.GetComponent<HolyWheats>().Collect();
-        }
+            collectible.Collect();
 
-        if(other.CompareTag(Consts.WheatTypes.ROTTEN_WHEAT))
-        {
-            other.gameObject.GetComponent<RottenWheats>().Collect();
         }
     }
 }

@@ -772,6 +772,7 @@ GameObject:
   m_Component:
   - component: {fileID: 473259254}
   - component: {fileID: 473259253}
+  - component: {fileID: 473259255}
   m_Layer: 0
   m_Name: GoldWheat
   m_TagString: GoldWheat
@@ -816,6 +817,21 @@ Transform:
   - {fileID: 1014631568065182709}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &473259255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473259252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1035d2fce0e1d04da9d76ab2835071b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GoldWheats
+  playerController: {fileID: 352007420}
+  IncreaseMovementSpeed: 20
+  IncreaseTime: 5
 --- !u!1 &548770524
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,6 +842,7 @@ GameObject:
   m_Component:
   - component: {fileID: 548770526}
   - component: {fileID: 548770525}
+  - component: {fileID: 548770527}
   m_Layer: 0
   m_Name: HolyWheat
   m_TagString: HolyWheat
@@ -870,6 +887,21 @@ Transform:
   - {fileID: 31592683}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &548770527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548770524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad7f5a669cb2af4ba59aeb50b360969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HolyWheats
+  playerController: {fileID: 352007420}
+  JumpBoost: 5
+  JumpTime: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,6 +1562,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1937131432}
   - component: {fileID: 1937131431}
+  - component: {fileID: 1937131433}
   m_Layer: 0
   m_Name: 'RottenWheat '
   m_TagString: RottenWheat
@@ -1574,6 +1607,21 @@ Transform:
   - {fileID: 1935054338}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1937131433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937131430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 942d75684349d4c44b09718b9d2259c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RottenWheats
+  playerController: {fileID: 352007420}
+  DecreaseMovementSpeed: -25
+  DecreaseTime: 5
 --- !u!1 &2019524174
 GameObject:
   m_ObjectHideFlags: 0
