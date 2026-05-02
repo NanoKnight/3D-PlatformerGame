@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 850a8b50b2d218840b34733100c5b5b0, type: 3}
   m_Name: HolyWheat
   m_EditorClassIdentifier: Assembly-CSharp::WheatDesignSO
-  multiplierVal: 0
-  multiplierTime: 0
-  MultiplierVal: 0
-  MultiplierTime: 0
+  multiplierVal: 5
+  multiplierTime: 5
