@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
 
    public event Action onPlayerJump;
+   public event Action<PlayerState> OnPlayerStateChanged;
 
 
     [Header ("References")]
@@ -88,6 +89,9 @@ public class PlayerController : MonoBehaviour
         if (newState != currentStates)
         {
             PlayerStateController.ChangeState(newState);
+             OnPlayerStateChanged?.Invoke(newState);
+            
+           
         }
     }
     private void SetInputs()

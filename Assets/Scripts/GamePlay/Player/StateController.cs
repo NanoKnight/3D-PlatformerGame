@@ -12,6 +12,7 @@ public class StateController : MonoBehaviour
     {
         if(CurrentPlayerState == newState) return;
         CurrentPlayerState = newState;
+        
     }
 
     public PlayerState GetPlayerState()
